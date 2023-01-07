@@ -31,10 +31,6 @@ function TodoList({ todo, setTodo }: Props) {
     setTodolist(todos);
   }, [todos]);
 
-  React.useEffect(() => {
-    console.log(todolist);
-  }, [todolist]);
-
   // custom right click menu
   React.useEffect(() => {
     document.addEventListener("contextmenu", (e) => {
@@ -105,9 +101,15 @@ function TodoList({ todo, setTodo }: Props) {
             key={index}
             id={todo.id}
             className="flex items-center w-[90%] todo"
-            onClick={() => setTodo(todo)}
+            onClick={(e) => {
+              if (e.target instanceof HTMLElement) {
+                if (e.target.id !== "checkbox") {
+                  setTodo(todo);
+                }
+              }
+            }}
           >
-            <Todo todo={todo} />
+            <Todo id={todo.id} />
           </div>
         ))}
       </div>

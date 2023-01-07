@@ -15,12 +15,10 @@ function TodoSide({ todo, setTodo }: Props) {
 
   const [title, setTitle] = React.useState<string>("");
   const [description, setDescription] = React.useState<string>("");
-  const [completed, setCompleted] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     setTitle(todo ? todo.title : "");
     setDescription(todo ? todo.description : "");
-    setCompleted(todo ? todo.completed : false);
   }, [todo]);
 
   if (todo.id == "ronfl3x") return <></>;
@@ -56,7 +54,7 @@ function TodoSide({ todo, setTodo }: Props) {
 
       <textarea
         id="description"
-        className="input-field resize-none w-[100%] h-[70%] border-b-2"
+        className="input-field resize-none w-[100%] h-[85%] "
         placeholder="Do something as if it was important."
         value={description}
         onChange={(e) => {
@@ -65,29 +63,6 @@ function TodoSide({ todo, setTodo }: Props) {
           updateTodo(newTodo);
         }}
       />
-      <label
-        htmlFor="checkbox"
-        className="w-[100%] cursor-pointer flex justify-center h-[5%] items-center"
-        onClick={() => {
-          setCompleted(!completed);
-          let newTodo = { ...todo, completed: !completed } as TodoItem;
-          updateTodo(newTodo);
-        }}
-      >
-        <div
-          id="checkbox"
-          className={`flex items-center justify-center cursor-pointer w-6 h-6 md:w-7 md:h-7 rounded mr-2 shadow-inner ${
-            !completed ? "background-fade-out" : "background-fade-in"
-          }`}
-        >
-          <FiCheck
-            className={`fade-in md:text-xl text-white ${
-              !completed ? " fade-out duration-100" : ""
-            }`}
-          />
-        </div>
-        <span className="text-sm md:text-lg">Done</span>
-      </label>
     </div>
   );
 }
