@@ -7,7 +7,7 @@ const todoRef = ref(db, "todolist/");
 
 export default function getData() {
   let todos: TodoItem[] = [];
-  get(todoRef)
+  return get(todoRef)
     .then((snapshot) => {
       if (snapshot.exists()) {
         let tmp = snapshot.val();
@@ -23,11 +23,12 @@ export default function getData() {
       } else {
         console.log("No data available");
       }
+      return todos;
     })
     .catch((error) => {
       console.error(error);
+      return todos;
     });
-  return todos;
 }
 
 export function setData(todo: TodoItem) {

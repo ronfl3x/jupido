@@ -13,8 +13,9 @@ const TodoProvider: React.FC<Props> = ({ children }: Props) => {
   const [visible, setVisible] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    let data: TodoItem[] = getData();
-    setTodos(data);
+    getData().then((data) => {
+      setTodos(data);
+    });
   }, []);
 
   const generateUID = () => {

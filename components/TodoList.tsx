@@ -2,8 +2,8 @@ import React from "react";
 import { TodoContextType, TodoItem } from "../types/types";
 import { TodoContext } from "../context/todoContext";
 import Todo from "./Todo";
-import getData from "../hooks/database";
 import { FiTrash2 } from "react-icons/fi";
+import getData, { deleteData } from "../hooks/database";
 
 interface Props {
   todo: TodoItem;
@@ -11,22 +11,31 @@ interface Props {
 }
 
 function TodoList({ todo, setTodo }: Props) {
-  const { todos, setTodos, deleteTodo }: TodoContextType = React.useContext(
+  const { todos, setTodos, deleteTodo } = React.useContext(
     TodoContext
   ) as TodoContextType;
 
-  const [todolist, setTodolist] = React.useState<TodoItem[]>([]);
+  const [todolist, setTodolist] = React.useState<any>(null);
   const [topCustomMenu, setTopCustomMenu] = React.useState(0);
   const [leftCustomMenu, setLeftCustomMenu] = React.useState(0);
   const [showCustomMenu, setShowCustomMenu] = React.useState(false);
   const [key, setKey] = React.useState("");
 
   React.useEffect(() => {
-    console.log("todos", todos);
-    console.log("todolist", todolist);
-    setTodolist(todos);
-  }, [todos, todolist]);
+    getData().then((data) => {
+      setTodolist(data);
+    });
+  }, []);
 
+  React.useEffect(() => {
+    setTodolist(todos);
+  }, [todos]);
+
+  React.useEffect(() => {
+    console.log(todolist);
+  }, [todolist]);
+
+  // custom right click menu
   React.useEffect(() => {
     document.addEventListener("contextmenu", (e) => {
       if (e.target instanceof HTMLElement) {
@@ -49,6 +58,21 @@ function TodoList({ todo, setTodo }: Props) {
       setShowCustomMenu(false);
     });
   }, []);
+
+  if (todolist === null) {
+    return (
+      <div className="flex flex-col items-center justify-center w-[100%] h-[100%]">
+        <h1 className="text-2xl font-bold text-gray-500">Loading...</h1>
+      </div>
+    );
+  }
+
+  if (todolist.length == 0)
+    return (
+      <div className="flex flex-col items-center justify-center w-[100%] h-[100%]">
+        <h1 className="text-2xl font-bold text-gray-500">No todos</h1>
+      </div>
+    );
 
   return (
     <div className="relative flex flex-col h-[100%]  w-screen md:w-[20vw] md:min-w-[200px] items-center p-2 pt-0 space-y-7 overflow-y-scroll overflow-x-auto">
@@ -76,7 +100,7 @@ function TodoList({ todo, setTodo }: Props) {
       </div>
 
       <div className="flex flex-col items-center w-[100%] space-y-3">
-        {todolist.map((todo, index) => (
+        {todolist.map((todo: TodoItem, index: React.Key | null | undefined) => (
           <div
             key={index}
             id={todo.id}
