@@ -3,3 +3,104 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    font-family: "Poppins", sans-serif;
+    background-color: #f7f7f7;
+  }
+
+  .fade-in {
+    animation: opacityFromZero 500ms forwards;
+    opacity: 0;
+  }
+
+  .fade-out {
+    animation: opacityToZero 500ms forwards;
+  }
+  .background-fade-in {
+    animation: backgroundFadeIn 0.5s forwards;
+    background-color: rgb(209 213 219);
+  }
+
+  .background-fade-out {
+    animation: backgroundFadeOut 0.5s forwards;
+  }
+
+  .slide-from-bottom {
+    transform: translateY(100%);
+    animation: slideFromBottom 200ms forwards;
+  }
+
+  .slide-to-bottom {
+    animation: slideToBottom 200ms forwards;
+  }
+
+  @keyframes slideFromBottom {
+    0% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideToBottom {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(100%);
+      display: none;
+      visibility: hidden;
+    }
+  }
+
+  @keyframes opacityFromZero {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes opacityToZero {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      display: none;
+      visibility: hidden;
+    }
+  }
+
+  @keyframes backgroundFadeIn {
+    0% {
+      background-color: rgb(209 213 219);
+    }
+    100% {
+      background-color: #d14a5c;
+    }
+  }
+
+  @keyframes backgroundFadeOut {
+    0% {
+      background-color: #d14a5c;
+    }
+    100% {
+      background-color: rgb(209 213 219);
+    }
+  }
+}
+
+@layer components {
+  .input-field {
+    @apply bg-transparent;
+  }
+
+  .input-field:focus {
+    @apply outline-none;
+  }
+}
