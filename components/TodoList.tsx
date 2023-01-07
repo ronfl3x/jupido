@@ -3,7 +3,6 @@ import { TodoContextType, TodoItem } from "../types/types";
 import { TodoContext } from "../context/todoContext";
 import Todo from "./Todo";
 import { FiTrash2 } from "react-icons/fi";
-import getData, { deleteData } from "../hooks/database";
 
 interface Props {
   todo: TodoItem;
@@ -11,7 +10,7 @@ interface Props {
 }
 
 function TodoList({ todo, setTodo }: Props) {
-  const { todos, setTodos, deleteTodo } = React.useContext(
+  const { todos, deleteTodo } = React.useContext(
     TodoContext
   ) as TodoContextType;
 
@@ -20,12 +19,6 @@ function TodoList({ todo, setTodo }: Props) {
   const [leftCustomMenu, setLeftCustomMenu] = React.useState(0);
   const [showCustomMenu, setShowCustomMenu] = React.useState(false);
   const [key, setKey] = React.useState("");
-
-  React.useEffect(() => {
-    getData().then((data) => {
-      setTodolist(data);
-    });
-  }, []);
 
   React.useEffect(() => {
     setTodolist(todos);
@@ -52,13 +45,22 @@ function TodoList({ todo, setTodo }: Props) {
 
     document.addEventListener("click", () => {
       setShowCustomMenu(false);
+      setKey("");
     });
   }, []);
 
+  const testfc = () => {
+    console.log(todolist);
+    return true;
+  };
+
   if (todolist === null) {
     return (
-      <div className="flex flex-col items-center justify-center w-[100%] h-[100%]">
-        <h1 className="text-2xl font-bold text-gray-500">Loading...</h1>
+      <div className="flex flex-col items-center w-[20%] h-[100%] space-y-2 p-2">
+        {/* make 3 rectangles with background bg-[#f0f0f0] and animation pulse tailwind */}
+        <div className="w-[100%] h-10 bg-[#d0d0d0] rounded animate-pulse"></div>
+        <div className="w-[100%] h-10 bg-[#d0d0d0] rounded animate-pulse"></div>
+        <div className="w-[100%] h-10 bg-[#d0d0d0] rounded animate-pulse"></div>
       </div>
     );
   }
@@ -71,14 +73,14 @@ function TodoList({ todo, setTodo }: Props) {
     );
 
   return (
-    <div className="relative flex flex-col h-[100%]  w-screen md:w-[20vw] md:min-w-[200px] items-center p-2 pt-0 space-y-7 overflow-y-scroll overflow-x-auto">
+    <div className="relative flex flex-col h-[100%]  w-screen md:w-[20vw] md:min-w-[200px] items-center p-2 pt-0 overflow-y-scroll overflow-x-auto">
       <div
         className={`absolute  ${
           showCustomMenu ? "flex" : "hidden"
         } bg-white rounded-md shadow-md p-2 space-y-2 z-10 cursor-pointer transition duration-200 hover:bg-gray-100 hover:shadow-lg items-center`}
         style={{ top: topCustomMenu, left: leftCustomMenu }}
         onClick={() => {
-          if (key) {
+          if (key !== "") {
             if (todo.id == key) {
               setTodo({
                 id: "ronfl3x",
@@ -109,7 +111,7 @@ function TodoList({ todo, setTodo }: Props) {
               }
             }}
           >
-            <Todo id={todo.id} />
+            <Todo id={todo.id} title={todo.title} completed={todo.completed} />
           </div>
         ))}
       </div>
