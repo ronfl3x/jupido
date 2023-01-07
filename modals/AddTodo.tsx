@@ -78,11 +78,11 @@ function AddTodo() {
     >
       <div
         ref={bgRef}
-        className={` min-w-[80vw] min-h-[450px] relative bg-[#f7f7f7] md:min-w-[60%] w-[60%] h-[80%] shadow-sm rounded ${
+        className={` min-w-[300px] min-h-[450px] relative bg-[#f7f7f7] md:min-w-[60%] w-[60%] h-[80%] shadow-sm rounded-lg md:rounded ${
           visible ? "slide-from-bottom" : " slide-to-bottom"
         }`}
       >
-        <div className="relative w-[100%] flex justify-center items-center">
+        <div className="relative w-[100%] h-[10%] flex justify-center items-center">
           <h1 className="font-semibold text-[#292929] py-3 text-lg">
             New Task
           </h1>
@@ -92,26 +92,26 @@ function AddTodo() {
           />
         </div>
 
-        <section className="flex flex-col justify-start w-[100%] h-[80%] space-y-5 px-5">
+        <section className="flex flex-col justify-start w-[100%] h-[90%]  px-5">
           <input
             id="title"
             type="text"
             placeholder="Title"
-            className="input-field text-4xl border-b-2"
+            className="input-field text-4xl border-b-2 mb-4 h-[10%]"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
 
           <textarea
             id="description"
-            className="input-field resize-none h-[100%] min-h-[200px] border-b-2"
+            className="input-field resize-none h-[60%] min-h-[200px] border-b-2 mb-4"
             placeholder="Do something as if it was important."
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
           <label
             htmlFor="checkbox"
-            className=" cursor-pointer flex items-center"
+            className=" cursor-pointer flex items-center mb-4 h-[10%]"
             onClick={() => setCompleted(!completed)}
           >
             <div
@@ -128,7 +128,7 @@ function AddTodo() {
             </div>
             Done
           </label>
-          <div className="flex width-[100%] items-center justify-center">
+          <div className="flex h-[10%] width-[100%] items-center justify-center pb-5">
             <button
               className="w-[50%] ld:w-[30%] h-10 text-lg font-medium bg-[#d14a5c] text-white 
               rounded-md shadow-md hover:bg-[#ad3645] transition duration-300 ease-in-out"

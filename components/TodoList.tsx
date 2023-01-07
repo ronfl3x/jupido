@@ -7,9 +7,11 @@ import { FiTrash2 } from "react-icons/fi";
 interface Props {
   todo: TodoItem;
   setTodo: (todo: TodoItem) => void;
+  setShowList: (showList: boolean) => void;
+  setShowSide: (showSide: boolean) => void;
 }
 
-function TodoList({ todo, setTodo }: Props) {
+function TodoList({ todo, setTodo, setShowList, setShowSide }: Props) {
   const { todos, deleteTodo } = React.useContext(
     TodoContext
   ) as TodoContextType;
@@ -30,6 +32,7 @@ function TodoList({ todo, setTodo }: Props) {
       if (e.target instanceof HTMLElement) {
         if (e.target.classList.contains("todo")) {
           let key = e.target.getAttribute("id");
+          if (key == "b9wuiw") return;
           setKey(key ? key : "");
           e.preventDefault();
           setTopCustomMenu(e.clientY - 85);
@@ -49,14 +52,9 @@ function TodoList({ todo, setTodo }: Props) {
     });
   }, []);
 
-  const testfc = () => {
-    console.log(todolist);
-    return true;
-  };
-
   if (todolist === null) {
     return (
-      <div className="flex flex-col items-center w-[20%] h-[100%] space-y-2 p-2">
+      <div className="flex flex-col items-center w-[screen] md:w-[20%] h-[100%] space-y-2 p-2">
         {/* make 3 rectangles with background bg-[#f0f0f0] and animation pulse tailwind */}
         <div className="w-[100%] h-10 bg-[#d0d0d0] rounded animate-pulse"></div>
         <div className="w-[100%] h-10 bg-[#d0d0d0] rounded animate-pulse"></div>
@@ -108,6 +106,11 @@ function TodoList({ todo, setTodo }: Props) {
                 if (e.target.id !== "checkbox") {
                   setTodo(todo);
                 }
+              }
+              // if screen is small then hide the todo list
+              if (window.innerWidth < 768) {
+                setShowList(false);
+                setShowSide(true);
               }
             }}
           >

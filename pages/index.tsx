@@ -13,6 +13,23 @@ const Home = () => {
     description: "",
     completed: false,
   });
+  const [showList, setShowList] = React.useState<boolean>(true);
+  const [showSide, setShowSide] = React.useState<boolean>(false);
+
+  //react hook on window resize
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setShowList(true);
+        setShowSide(true);
+      } else {
+        setShowList(true);
+        setShowSide(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <div className="relative flex flex-col min-width-screen min-h-screen overflow-hidden">
@@ -20,11 +37,33 @@ const Home = () => {
         <title>Jupido</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar />
+      <Navbar
+        showList={showList}
+        setShowList={setShowList}
+        setShowSide={setShowSide}
+      />
       <AddTodo />
-      <main className="relative w-[100%] h-[100%] md:h-[80vh] flex flex-col md:flex-row ">
-        <TodoList todo={todo} setTodo={setTodo} />
-        <TodoSide todo={todo} setTodo={setTodo} />
+      <main className="relative w-[100%] h-[80vh] flex flex-col items-center md:flex-row ">
+        {showList ? (
+          <TodoList
+            todo={todo}
+            setTodo={setTodo}
+            setShowList={setShowList}
+            setShowSide={setShowSide}
+          />
+        ) : (
+          <></>
+        )}
+        {showSide ? (
+          <TodoSide
+            todo={todo}
+            setTodo={setTodo}
+            setShowList={setShowList}
+            setShowSide={setShowSide}
+          />
+        ) : (
+          <></>
+        )}
       </main>
     </div>
   );

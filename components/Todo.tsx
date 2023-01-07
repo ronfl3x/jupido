@@ -43,12 +43,12 @@ function Todo({ title, completed, id }: Props) {
       >
         <div
           id="checkbox"
-          className={`flex items-center justify-center cursor-pointer w-4 h-4 md:w-5 md:h-5 rounded-full shadow-inner ${
+          className={`flex items-center justify-center cursor-pointer w-5 h-5 md:w-6 md:h-6 rounded-full shadow-inner ${
             !sCompleted ? "background-fade-out" : "background-fade-in"
           }`}
         >
           <FiCheck
-            className={`fade-in md:text-[14px] text-white ${
+            className={`fade-in text-[12px] md:text-[14px] text-white ${
               !sCompleted ? " fade-out duration-100" : ""
             }`}
           />

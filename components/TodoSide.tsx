@@ -1,14 +1,16 @@
 import React from "react";
 import { TodoContextType, TodoItem } from "../types/types";
 import { TodoContext } from "../context/todoContext";
-import { FiCheck, FiTrash2 } from "react-icons/fi";
+import { FiTrash2 } from "react-icons/fi";
 
 interface Props {
   todo: TodoItem;
   setTodo: (todo: TodoItem) => void;
+  setShowList: (showList: boolean) => void;
+  setShowSide: (showSide: boolean) => void;
 }
 
-function TodoSide({ todo, setTodo }: Props) {
+function TodoSide({ todo, setTodo, setShowList, setShowSide }: Props) {
   const { updateTodo, deleteTodo } = React.useContext(
     TodoContext
   ) as TodoContextType;
@@ -24,8 +26,8 @@ function TodoSide({ todo, setTodo }: Props) {
   if (todo.id == "ronfl3x") return <></>;
 
   return (
-    <div className="relative flex flex-col h-[100%] w-screen md:w-[80vw] items-start mx-5 rounded-lg space-y-5 p-3 bg-[#f0f0f0]">
-      <div className="flex items-center justify-between w-[100%] h-[15%]">
+    <div className="relative flex flex-col h-[100%] w-screen md:w-[80vw] items-start px-10 md:mx-5 md:rounded-lg  md:p-3 bg-transparent md:bg-[#f0f0f0]">
+      <div className="flex items-center justify-between w-[100%] h-[15%] mb-4">
         <input
           className="text-xl w-[90%] h-[100%] p-1 md:text-2xl lg:text-3xl font-medium bg-transparent outline-none border-b-2"
           placeholder="Todo Title"
@@ -36,7 +38,11 @@ function TodoSide({ todo, setTodo }: Props) {
             updateTodo(newTodo);
           }}
         />
-        <div className="w-[10%] flex items-center justify-center text-2xl cursor-pointer">
+        <div
+          className={`w-[10%]  items-center justify-center text-2xl cursor-pointer ${
+            todo.id === "b9wuiw" ? " hidden" : " flex"
+          }`}
+        >
           <FiTrash2
             className="w-10 h-10 bg-[#f0f0f0] p-2 rounded-full text-red-600 transition duration-200 hover:bg-[#e0e0e0] ease-in-out"
             onClick={() => {
@@ -47,6 +53,8 @@ function TodoSide({ todo, setTodo }: Props) {
                 description: "",
                 completed: false,
               });
+              setShowList(true);
+              setShowSide(false);
             }}
           />
         </div>
